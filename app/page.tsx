@@ -62,9 +62,7 @@ export default function HomePage() {
             {projects.map((p) => (
               <Link
                 key={p.slug}
-                href={p.url ?? `#${p.slug}`}
-                target={p.url ? '_blank' : undefined}
-                rel={p.url ? 'noopener noreferrer' : undefined}
+                href={`/projects/${p.slug}`}
                 className="glass glow-border group block rounded-xl p-5 transition-transform hover:-translate-y-0.5"
               >
                 <div className="mb-2 flex items-center gap-2 font-mono text-xs text-[var(--color-fg-muted)]">

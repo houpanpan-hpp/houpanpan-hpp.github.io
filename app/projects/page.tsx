@@ -28,53 +28,62 @@ export default function ProjectsPage() {
             <article
               key={p.slug}
               id={p.slug}
-              className="glass glow-border group flex flex-col rounded-xl p-5 transition-transform hover:-translate-y-0.5"
+              className="glass glow-border group relative flex flex-col rounded-xl p-5 transition-transform hover:-translate-y-0.5"
             >
-              <div className="mb-3 flex items-center gap-2">
-                {p.featured && (
-                  <span className="rounded-full bg-[var(--color-accent)]/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[var(--color-accent)]">
-                    featured
-                  </span>
-                )}
-              </div>
-              <h2 className="text-lg font-semibold transition-colors group-hover:text-[var(--color-accent)]">
-                {p.title}
-              </h2>
-              <p className="mt-2 flex-1 text-sm text-[var(--color-fg-muted)]">
-                {p.summary}
-              </p>
-              {p.stack && p.stack.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {p.stack.map((s) => (
-                    <span
-                      key={s}
-                      className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)]/60 px-2 py-0.5 font-mono text-[10px] text-[var(--color-fg-muted)]"
-                    >
-                      {s}
+              <Link
+                href={`/projects/${p.slug}`}
+                className="absolute inset-0 z-0 rounded-xl"
+                aria-label={`查看项目 ${p.title}`}
+              />
+              <div className="relative z-10 flex flex-col">
+                <div className="mb-3 flex items-center gap-2">
+                  {p.featured && (
+                    <span className="rounded-full bg-[var(--color-accent)]/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[var(--color-accent)]">
+                      featured
                     </span>
-                  ))}
+                  )}
                 </div>
-              )}
-              <div className="mt-5 flex gap-3 text-xs">
-                {p.url && (
-                  <Link
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-accent)] transition-colors hover:underline"
-                  >
-                    站点 →
-                  </Link>
+                <h2 className="text-lg font-semibold transition-colors group-hover:text-[var(--color-accent)]">
+                  {p.title}
+                </h2>
+                <p className="mt-2 flex-1 text-sm text-[var(--color-fg-muted)]">
+                  {p.summary}
+                </p>
+                {p.stack && p.stack.length > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {p.stack.map((s) => (
+                      <span
+                        key={s}
+                        className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)]/60 px-2 py-0.5 font-mono text-[10px] text-[var(--color-fg-muted)]"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
                 )}
-                {p.repo && (
-                  <Link
-                    href={p.repo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
-                  >
-                    源码
-                  </Link>
+                {(p.url || p.repo) && (
+                  <div className="relative z-20 mt-5 flex gap-3 text-xs">
+                    {p.url && (
+                      <Link
+                        href={p.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--color-accent)] transition-colors hover:underline"
+                      >
+                        站点 →
+                      </Link>
+                    )}
+                    {p.repo && (
+                      <Link
+                        href={p.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
+                      >
+                        源码
+                      </Link>
+                    )}
+                  </div>
                 )}
               </div>
             </article>

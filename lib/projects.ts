@@ -21,6 +21,10 @@ export interface Project extends ProjectFrontmatter {
 
 const PROJECTS_DIR = path.join(process.cwd(), 'content', 'projects')
 
+export function getProjectBySlug(slug: string): Project | null {
+  return getAllProjects().find((p) => p.slug === slug) ?? null
+}
+
 export function getAllProjects(): Project[] {
   if (!fs.existsSync(PROJECTS_DIR)) return []
   const files = fs
