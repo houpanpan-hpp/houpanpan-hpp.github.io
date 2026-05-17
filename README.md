@@ -79,13 +79,13 @@ assetPrefix: '/<repo-name>',
 1. 仓库开启 Discussions（Settings → General → Features）。
 2. 访问 https://giscus.app 配置，复制 4 个值。
 3. 仓库 Settings → Secrets and variables → Actions → Variables 添加：
-   - `GISCUS_REPO`（如 `houpanpan/houpanpan.github.io`）
+   - `GISCUS_REPO`（如 `houpanpan-hpp/houpanpan.github.io`）
    - `GISCUS_REPO_ID`
    - `GISCUS_CATEGORY`（如 `Comments`）
    - `GISCUS_CATEGORY_ID`
 4. 本地预览时在项目根创建 `.env.local`：
    ```
-   NEXT_PUBLIC_GISCUS_REPO=houpanpan/houpanpan.github.io
+   NEXT_PUBLIC_GISCUS_REPO=houpanpan-hpp/houpanpan.github.io
    NEXT_PUBLIC_GISCUS_REPO_ID=...
    NEXT_PUBLIC_GISCUS_CATEGORY=Comments
    NEXT_PUBLIC_GISCUS_CATEGORY_ID=...
