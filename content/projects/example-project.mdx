@@ -1,0 +1,22 @@
+---
+title: "houpan.dev"
+date: 2026-05-17
+summary: 你正在看的这个站点本身。Next.js 16 + MDX + Tailwind v4，部署在 GitHub Pages。
+stack: [Next.js, MDX, Tailwind, TypeScript]
+url: https://houpan.dev
+repo: https://github.com/houpanpan/houpanpan.github.io
+featured: true
+order: 100
+---
+
+## 它在解决什么
+
+需要一个能长期写技术文章 + 项目展示 + 经验记录的地方。
+Notion / 公众号 / 知乎都不够"自己"，所以自己搭。
+
+## 设计要点
+
+- **静态导出**：`next build` 直接产出 `out/`，扔到 GitHub Pages。
+- **MDX**：文章里能嵌组件，比纯 Markdown 灵活。
+- **Cmd+K 搜索**：构建期生成索引，客户端 Fuse.js 查询。
+- **深色为主**：Cyberpunk 一点点，但不多。
