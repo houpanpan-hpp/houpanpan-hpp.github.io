@@ -9,7 +9,7 @@ type SearchEntry = {
   category: string
   slug: string
   date: string
-  type: 'post' | 'project'
+  type: 'post' | 'project' | 'report'
 }
 
 const ROOT = process.cwd()
@@ -55,6 +55,24 @@ function build(): SearchEntry[] {
       summary: String(data.summary ?? ''),
       tags: (data.stack as string[] | undefined) ?? [],
       category: 'project',
+      slug: filename.replace(/\.(mdx|md)$/, ''),
+      date:
+        typeof data.date === 'string'
+          ? data.date
+          : data.date instanceof Date
+            ? data.date.toISOString()
+            : '',
+    })
+  }
+
+  for (const { filename, data } of readMdxDir(path.join(ROOT, 'content', 'reports'))) {
+    if (!data.title || data.draft) continue
+    entries.push({
+      type: 'report',
+      title: String(data.title),
+      summary: String(data.summary ?? ''),
+      tags: (data.tags as string[] | undefined) ?? [],
+      category: 'report',
       slug: filename.replace(/\.(mdx|md)$/, ''),
       date:
         typeof data.date === 'string'

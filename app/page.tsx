@@ -3,10 +3,13 @@ import { Hero } from '@/components/hero'
 import { PostCard } from '@/components/post-card'
 import { getAllPosts } from '@/lib/posts'
 import { getAllProjects } from '@/lib/projects'
+import { getAllReports } from '@/lib/reports'
+import { formatDate } from '@/lib/utils'
 
 export default function HomePage() {
   const posts = getAllPosts().slice(0, 4)
   const projects = getAllProjects().slice(0, 3)
+  const reports = getAllReports().slice(0, 3)
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 md:px-6 md:py-12">
@@ -80,6 +83,46 @@ export default function HomePage() {
           </div>
         )}
       </section>
+
+      {/* Recent reports */}
+      {reports.length > 0 && (
+        <section className="mt-20">
+          <div className="mb-6 flex items-end justify-between">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight">最新报告</h2>
+              <p className="mt-1 text-sm text-[var(--color-fg-muted)]">
+                评测报告、可视化分析、模型 demo
+              </p>
+            </div>
+            <Link
+              href="/reports"
+              className="text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-accent)]"
+            >
+              全部 →
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {reports.map((r) => (
+              <Link
+                key={r.slug}
+                href={`/reports/${r.slug}`}
+                className="glass glow-border group block rounded-xl p-5 transition-transform hover:-translate-y-0.5"
+              >
+                <div className="mb-2 flex items-center gap-2 font-mono text-xs text-[var(--color-fg-muted)]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent-2)]" />
+                  <time>{formatDate(r.date)}</time>
+                </div>
+                <h3 className="font-semibold transition-colors group-hover:text-[var(--color-accent)]">
+                  {r.title}
+                </h3>
+                <p className="mt-2 line-clamp-2 text-sm text-[var(--color-fg-muted)]">
+                  {r.summary}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

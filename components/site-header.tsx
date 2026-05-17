@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: '/', label: '首页' },
   { href: '/blog', label: '博客' },
   { href: '/projects', label: '项目' },
+  { href: '/reports', label: '报告' },
   { href: '/about', label: '关于' },
 ] as const
 

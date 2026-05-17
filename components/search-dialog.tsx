@@ -11,7 +11,13 @@ type SearchEntry = {
   category: string
   slug: string
   date: string
-  type: 'post' | 'project'
+  type: 'post' | 'project' | 'report'
+}
+
+const TYPE_TO_PATH: Record<SearchEntry['type'], string> = {
+  post: '/blog',
+  project: '/projects',
+  report: '/reports',
 }
 
 type SearchDialogProps = {
@@ -123,7 +129,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             results.map((entry) => (
               <li key={`${entry.type}-${entry.slug}`}>
                 <Link
-                  href={entry.type === 'post' ? `/blog/${entry.slug}` : `/projects#${entry.slug}`}
+                  href={`${TYPE_TO_PATH[entry.type]}/${entry.slug}`}
                   onClick={() => onOpenChange(false)}
                   className="block rounded-lg px-3 py-2.5 transition-colors hover:bg-[var(--color-bg-elevated)]"
                 >

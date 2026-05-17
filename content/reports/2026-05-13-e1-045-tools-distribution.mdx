@@ -1,0 +1,29 @@
+---
+title: "E1-045 平台推理 Tools 分布报告"
+date: 2026-05-13
+tags: [llm, tool-use, eval]
+summary: 按 session / turn / tool call / A 类意图四个层次整理一次平台推理跑批中的 tool call 分布，并和 role=tool 返回数做一致性校验。
+html: /reports/e1-045-tools-distribution/index.html
+height: 1600
+---
+
+## 这份报告在看什么
+
+一份针对 E1-045 平台推理（非量化）跑批的离线分析。
+统计对象是 assistant 消息中的 `tool_calls[]`，并把它和后续 `role=tool` 返回数做一致性校验，
+找出**实际被调起来的工具**与**意图标签**之间的对应关系。
+
+## 怎么读上面的看板
+
+- **摘要四格**：A 类 / BC 类各自的 session、turn、tool call 总量与单 turn 调用密度。
+- **总体分布 + 不同 Tool 分布**：先看 tool turn 占比，再看每个工具的命中次数。
+  参数解析失败为 0，说明所有 `function.arguments` 都能正常 JSON 解析。
+- **A 类不同意图下 Tools 分布**：意图标签是从 `reasoning_content` 里按 `A-数字` 抽出来的，
+  多标签 turn 同时计入多个意图桶，没有显式标签的 turn 归为"未标注"。
+
+## 一眼可看出的两件事
+
+- A 类链路里 `gaokao_volunteer_form` 占到 28.2%，是志愿方案链路的标志工具。
+- BC 类近乎稳定走 `gaokao_sc_tool_batch -> gaokao_search_tool` 的双调用模式，几乎不碰志愿表工具。
+
+剩下的下钻细节都在看板里。

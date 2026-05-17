@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E1-045 Tools 分布报告</title>
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --text: #1d2530;
+      --muted: #667085;
+      --line: #d9dee8;
+      --blue: #2563eb;
+      --green: #0f9f6e;
+      --amber: #d97706;
+      --purple: #7c3aed;
+      --sc: #2563eb;
+      --search: #0f9f6e;
+      --volunteer: #d97706;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.5;
+    }
+    header {
+      padding: 34px 42px 28px;
+      background: #18202c;
+      color: white;
+    }
+    header h1 { margin: 0 0 10px; font-size: 30px; letter-spacing: 0; }
+    header p { margin: 0; color: #cbd5e1; max-width: 960px; }
+    main { max-width: 1320px; margin: 0 auto; padding: 26px 28px 48px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+    h2 { margin: 0 0 14px; font-size: 21px; }
+    h3 { margin: 20px 0 10px; font-size: 17px; }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 8px 20px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 14px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin: 16px 0 4px;
+    }
+    .metric-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfcfe;
+    }
+    .metric-label { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .metric-value { font-size: 26px; font-weight: 700; margin-top: 3px; }
+    .metric-detail { color: var(--muted); font-size: 13px; margin-top: 2px; }
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 6px 0 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      table-layout: auto;
+    }
+    th, td {
+      border-bottom: 1px solid #e6e9ef;
+      padding: 9px 10px;
+      vertical-align: middle;
+      text-align: left;
+    }
+    th {
+      color: #475467;
+      font-weight: 650;
+      background: #f8fafc;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    code {
+      background: #eef2f7;
+      border: 1px solid #dce3ec;
+      border-radius: 5px;
+      padding: 2px 5px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #e6e9ef;
+      border-radius: 8px;
+    }
+    .bar-cell {
+      display: grid;
+      grid-template-columns: minmax(110px, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      min-width: 210px;
+    }
+    .bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #e7ebf2;
+      overflow: hidden;
+    }
+    .bar-fill { height: 100%; background: var(--blue); }
+    .bar-fill.green { background: var(--green); }
+    .bar-fill.amber { background: var(--amber); }
+    .bar-fill.purple { background: var(--purple); }
+    .stacked {
+      display: flex;
+      width: 220px;
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #e7ebf2;
+      margin-bottom: 5px;
+    }
+    .seg.sc { background: var(--sc); }
+    .seg.search { background: var(--search); }
+    .seg.volunteer { background: var(--volunteer); }
+    .mini-legend { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      margin: 4px 0 12px;
+    }
+    .legend span::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      margin-right: 6px;
+    }
+    .legend .sc::before { background: var(--sc); }
+    .legend .search::before { background: var(--search); }
+    .legend .volunteer::before { background: var(--volunteer); }
+    a { color: #175cd3; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    @media (max-width: 760px) {
+      header { padding: 24px 20px; }
+      main { padding: 18px 14px 36px; }
+      section { padding: 16px; }
+      header h1 { font-size: 24px; }
+      .bar-cell { min-width: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>E1-045 平台推理非量化 Tools 分布报告</h1>
+    <p>按 session、turn、tool call 和 A 类意图四个层次整理。统计对象为 assistant 消息中的 <code>tool_calls[]</code>，并和 <code>role=tool</code> 返回数做一致性校验。</p>
+    <div class="meta">
+      <div>生成时间：2026-05-13 15:16:57</div>
+      <div>A 类：/Users/dujia/Desktop/Data/高考/0512_infer/batch_A类测试_20260513T034539.jsonl</div>
+      <div>BC 类：/Users/dujia/Desktop/Data/高考/0512_infer/batch_BC类测试_20260513T035445.jsonl</div>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>摘要</h2>
+      <div class="cards"><div class="metric-card"><div class="metric-label">A sessions</div><div class="metric-value">32</div><div class="metric-detail">133 turns</div></div><div class="metric-card"><div class="metric-label">A tool calls</div><div class="metric-value">238</div><div class="metric-detail">132 tool turns</div></div><div class="metric-card"><div class="metric-label">A calls / turn</div><div class="metric-value">1.79</div><div class="metric-detail">7.44 / session</div></div><div class="metric-card"><div class="metric-label">BC sessions</div><div class="metric-value">31</div><div class="metric-detail">115 turns</div></div><div class="metric-card"><div class="metric-label">BC tool calls</div><div class="metric-value">228</div><div class="metric-detail">115 tool turns</div></div><div class="metric-card"><div class="metric-label">BC calls / turn</div><div class="metric-value">1.98</div><div class="metric-detail">7.35 / session</div></div></div>
+      <p class="note">结论：A 类包含志愿方案链路，<code>gaokao_volunteer_form</code> 占 28.2%；BC 类几乎稳定为 <code>gaokao_sc_tool_batch -&gt; gaokao_search_tool</code> 双调用模式，未调用志愿表工具。</p>
+    </section>
+
+    <section>
+      <h2>总体分布</h2>
+      <p class="note">tool turn 表示该 turn 至少触发一次 tool call；参数解析失败为 0 表示所有 function.arguments 都能正常 JSON 解析。</p>
+      <div class="table-wrap"><table><thead><tr><th>类别</th><th>sessions</th><th>turns</th><th>tool turns</th><th>tool calls</th><th>tool responses</th><th>calls/session</th><th>calls/turn</th><th>参数解析失败</th></tr></thead><tbody><tr><td>A</td><td>32</td><td>133</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill green" style="width:99.25%"></div></div><span>132 (99.2%)</span></div></td><td>238</td><td>238</td><td>7.44</td><td>1.79</td><td>0</td></tr><tr><td>BC</td><td>31</td><td>115</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill green" style="width:100.00%"></div></div><span>115 (100.0%)</span></div></td><td>228</td><td>228</td><td>7.35</td><td>1.98</td><td>0</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>不同 Tool 分布</h2>
+      <div class="table-wrap"><table><thead><tr><th>类别</th><th>tool</th><th>calls</th><th>turns with tool</th><th>sessions with tool</th><th>参数 query items</th><th>search query groups</th></tr></thead><tbody><tr><td>A</td><td><code>gaokao_sc_tool_batch</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:81.74%"></div></div><span>94 (39.5%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill green" style="width:65.41%"></div></div><span>87 (65.4%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:96.88%"></div></div><span>31 (96.9%)</span></div></td><td>286</td><td>0</td></tr><tr><td>A</td><td><code>gaokao_search_tool</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:66.96%"></div></div><span>77 (32.4%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill green" style="width:56.39%"></div></div><span>75 (56.4%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:93.75%"></div></div><span>30 (93.8%)</span></div></td><td>707</td><td>196</td></tr><tr><td>A</td><td><code>gaokao_volunteer_form</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:58.26%"></div></div><span>67 (28.2%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill green" style="width:49.62%"></div></div><span>66 (49.6%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:93.75%"></div></div><span>30 (93.8%)</span></div></td><td>67</td><td>0</td></tr><tr><td>BC</td><td><code>gaokao_sc_tool_batch</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:98.26%"></div></div><span>113 (49.6%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill green" style="width:98.26%"></div></div><span>113 (98.3%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:100.00%"></div></div><span>31 (100.0%)</span></div></td><td>359</td><td>0</td></tr><tr><td>BC</td><td><code>gaokao_search_tool</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:100.00%"></div></div><span>115 (50.4%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill green" style="width:100.00%"></div></div><span>115 (100.0%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:100.00%"></div></div><span>31 (100.0%)</span></div></td><td>620</td><td>135</td></tr><tr><td>BC</td><td><code>gaokao_volunteer_form</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:0.00%"></div></div><span>0 (0.0%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill green" style="width:0.00%"></div></div><span>0 (0.0%)</span></div></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:0.00%"></div></div><span>0 (0.0%)</span></div></td><td>0</td><td>0</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>Turn 粒度</h2>
+      <h3>每轮 Tool Call 数</h3>
+      <div class="table-wrap"><table><thead><tr><th>类别</th><th>calls/turn</th><th>turn 数</th></tr></thead><tbody><tr><td>A</td><td>0</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:1.35%"></div></div><span>1 (0.8%)</span></div></td></tr><tr><td>A</td><td>1</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:59.46%"></div></div><span>44 (33.1%)</span></div></td></tr><tr><td>A</td><td>2</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:100.00%"></div></div><span>74 (55.6%)</span></div></td></tr><tr><td>A</td><td>3</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:14.86%"></div></div><span>11 (8.3%)</span></div></td></tr><tr><td>A</td><td>4</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:2.70%"></div></div><span>2 (1.5%)</span></div></td></tr><tr><td>A</td><td>5</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:1.35%"></div></div><span>1 (0.8%)</span></div></td></tr><tr><td>BC</td><td>1</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:1.77%"></div></div><span>2 (1.7%)</span></div></td></tr><tr><td>BC</td><td>2</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:100.00%"></div></div><span>113 (98.3%)</span></div></td></tr></tbody></table></div>
+      <h3>Top Tool 序列</h3>
+      <div class="table-wrap"><table><thead><tr><th>类别</th><th>tool sequence</th><th>turn 数</th></tr></thead><tbody><tr><td>A</td><td><code>gaokao_sc_tool_batch -&gt; gaokao_search_tool</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:100.00%"></div></div><span>31 (23.3%)</span></div></td></tr><tr><td>A</td><td><code>gaokao_volunteer_form -&gt; gaokao_sc_tool_batch</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:74.19%"></div></div><span>23 (17.3%)</span></div></td></tr><tr><td>A</td><td><code>gaokao_search_tool</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:54.84%"></div></div><span>17 (12.8%)</span></div></td></tr><tr><td>A</td><td><code>gaokao_volunteer_form</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:48.39%"></div></div><span>15 (11.3%)</span></div></td></tr><tr><td>A</td><td><code>gaokao_volunteer_form -&gt; gaokao_search_tool</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:41.94%"></div></div><span>13 (9.8%)</span></div></td></tr><tr><td>A</td><td><code>gaokao_sc_tool_batch</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:38.71%"></div></div><span>12 (9.0%)</span></div></td></tr><tr><td>A</td><td><code>gaokao_volunteer_form -&gt; gaokao_sc_tool_batch -&gt; gaokao_search_tool</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:16.13%"></div></div><span>5 (3.8%)</span></div></td></tr><tr><td>A</td><td><code>gaokao_search_tool -&gt; gaokao_sc_tool_batch</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:9.68%"></div></div><span>3 (2.3%)</span></div></td></tr><tr><td>A</td><td><code>gaokao_sc_tool_batch -&gt; gaokao_volunteer_form</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:9.68%"></div></div><span>3 (2.3%)</span></div></td></tr><tr><td>A</td><td><code>gaokao_sc_tool_batch -&gt; gaokao_search_tool -&gt; gaokao_sc_tool_batch -&gt; gaokao_volunteer_form</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:3.23%"></div></div><span>1 (0.8%)</span></div></td></tr><tr><td>BC</td><td><code>gaokao_sc_tool_batch -&gt; gaokao_search_tool</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:100.00%"></div></div><span>113 (98.3%)</span></div></td></tr><tr><td>BC</td><td><code>gaokao_search_tool</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill purple" style="width:1.77%"></div></div><span>2 (1.7%)</span></div></td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>Session 粒度</h2>
+      <h3>Tool Call 离散度</h3>
+      <div class="table-wrap"><table><thead><tr><th>类别</th><th>均值</th><th>中位数</th><th>P90</th><th>最大值</th></tr></thead><tbody><tr><td>A</td><td>7.44</td><td>7.0</td><td>10.0</td><td>14</td></tr><tr><td>BC</td><td>7.35</td><td>6.0</td><td>10.0</td><td>14</td></tr></tbody></table></div>
+      <h3>Top sessions by tool calls</h3>
+      <div class="table-wrap"><table><thead><tr><th>类别</th><th>session</th><th>turns</th><th>tool calls</th><th>sc_batch</th><th>search</th><th>volunteer</th></tr></thead><tbody><tr><td>A</td><td><code>A_30</code></td><td>6</td><td>14</td><td>7</td><td>5</td><td>2</td></tr><tr><td>A</td><td><code>A_10</code></td><td>8</td><td>13</td><td>7</td><td>4</td><td>2</td></tr><tr><td>A</td><td><code>A_1</code></td><td>5</td><td>11</td><td>5</td><td>5</td><td>1</td></tr><tr><td>A</td><td><code>A_11</code></td><td>7</td><td>10</td><td>5</td><td>2</td><td>3</td></tr><tr><td>A</td><td><code>A_16</code></td><td>5</td><td>10</td><td>4</td><td>3</td><td>3</td></tr><tr><td>A</td><td><code>A_4</code></td><td>5</td><td>10</td><td>5</td><td>2</td><td>3</td></tr><tr><td>A</td><td><code>A_5</code></td><td>5</td><td>9</td><td>2</td><td>4</td><td>3</td></tr><tr><td>A</td><td><code>A_7</code></td><td>5</td><td>9</td><td>5</td><td>1</td><td>3</td></tr><tr><td>A</td><td><code>A_9</code></td><td>5</td><td>9</td><td>3</td><td>4</td><td>2</td></tr><tr><td>A</td><td><code>A_2</code></td><td>5</td><td>8</td><td>4</td><td>3</td><td>1</td></tr><tr><td>BC</td><td><code>BC_27</code></td><td>7</td><td>14</td><td>7</td><td>7</td><td>0</td></tr><tr><td>BC</td><td><code>BC_19</code></td><td>5</td><td>10</td><td>5</td><td>5</td><td>0</td></tr><tr><td>BC</td><td><code>BC_25</code></td><td>5</td><td>10</td><td>5</td><td>5</td><td>0</td></tr><tr><td>BC</td><td><code>BC_30</code></td><td>5</td><td>10</td><td>5</td><td>5</td><td>0</td></tr><tr><td>BC</td><td><code>BC_5</code></td><td>5</td><td>10</td><td>5</td><td>5</td><td>0</td></tr><tr><td>BC</td><td><code>BC_3</code></td><td>5</td><td>9</td><td>4</td><td>5</td><td>0</td></tr><tr><td>BC</td><td><code>BC_1</code></td><td>4</td><td>8</td><td>4</td><td>4</td><td>0</td></tr><tr><td>BC</td><td><code>BC_13</code></td><td>4</td><td>8</td><td>4</td><td>4</td><td>0</td></tr><tr><td>BC</td><td><code>BC_14</code></td><td>4</td><td>8</td><td>4</td><td>4</td><td>0</td></tr><tr><td>BC</td><td><code>BC_15</code></td><td>4</td><td>8</td><td>4</td><td>4</td><td>0</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>A 类不同意图下 Tools 分布</h2>
+      <div class="legend"><span class="sc">gaokao_sc_tool_batch</span><span class="search">gaokao_search_tool</span><span class="volunteer">gaokao_volunteer_form</span></div>
+      <p class="note">A 类意图从 <code>reasoning_content</code> 中按 <code>A-数字</code> 抽取；多标签 turn 会同时计入多个意图桶，未出现显式标签的 turn 保留为“未标注”。</p>
+      <div class="table-wrap"><table><thead><tr><th>意图</th><th>turns</th><th>sessions</th><th>tool calls</th><th>tool mix</th><th>query items</th></tr></thead><tbody><tr><td><code>A-1</code></td><td>5</td><td>5</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:5.93%"></div></div><span>7 (1.40/turn)</span></div></td><td><div class="stacked"><span class="seg sc" style="width:57.14%"></span><span class="seg search" style="width:42.86%"></span><span class="seg volunteer" style="width:0.00%"></span></div><div class="mini-legend">SC 4 / Search 3 / Volunteer 0</div></td><td>65</td></tr><tr><td><code>A-2</code></td><td>1</td><td>1</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:0.85%"></div></div><span>1 (1.00/turn)</span></div></td><td><div class="stacked"><span class="seg sc" style="width:0.00%"></span><span class="seg search" style="width:0.00%"></span><span class="seg volunteer" style="width:100.00%"></span></div><div class="mini-legend">SC 0 / Search 0 / Volunteer 1</div></td><td>1</td></tr><tr><td><code>A-4</code></td><td>63</td><td>29</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:100.00%"></div></div><span>118 (1.87/turn)</span></div></td><td><div class="stacked"><span class="seg sc" style="width:32.20%"></span><span class="seg search" style="width:20.34%"></span><span class="seg volunteer" style="width:47.46%"></span></div><div class="mini-legend">SC 38 / Search 24 / Volunteer 56</div></td><td>355</td></tr><tr><td><code>A-5</code></td><td>2</td><td>2</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:3.39%"></div></div><span>4 (2.00/turn)</span></div></td><td><div class="stacked"><span class="seg sc" style="width:25.00%"></span><span class="seg search" style="width:25.00%"></span><span class="seg volunteer" style="width:50.00%"></span></div><div class="mini-legend">SC 1 / Search 1 / Volunteer 2</div></td><td>13</td></tr><tr><td><code>A-6</code></td><td>9</td><td>6</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:13.56%"></div></div><span>16 (1.78/turn)</span></div></td><td><div class="stacked"><span class="seg sc" style="width:25.00%"></span><span class="seg search" style="width:12.50%"></span><span class="seg volunteer" style="width:62.50%"></span></div><div class="mini-legend">SC 4 / Search 2 / Volunteer 10</div></td><td>36</td></tr><tr><td><code>A-8</code></td><td>11</td><td>10</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:17.80%"></div></div><span>21 (1.91/turn)</span></div></td><td><div class="stacked"><span class="seg sc" style="width:38.10%"></span><span class="seg search" style="width:9.52%"></span><span class="seg volunteer" style="width:52.38%"></span></div><div class="mini-legend">SC 8 / Search 2 / Volunteer 11</div></td><td>35</td></tr><tr><td><code>A-9</code></td><td>26</td><td>19</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:38.98%"></div></div><span>46 (1.77/turn)</span></div></td><td><div class="stacked"><span class="seg sc" style="width:50.00%"></span><span class="seg search" style="width:41.30%"></span><span class="seg volunteer" style="width:8.70%"></span></div><div class="mini-legend">SC 23 / Search 19 / Volunteer 4</div></td><td>257</td></tr><tr><td><code>A-10</code></td><td>1</td><td>1</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:3.39%"></div></div><span>4 (4.00/turn)</span></div></td><td><div class="stacked"><span class="seg sc" style="width:50.00%"></span><span class="seg search" style="width:25.00%"></span><span class="seg volunteer" style="width:25.00%"></span></div><div class="mini-legend">SC 2 / Search 1 / Volunteer 1</div></td><td>8</td></tr><tr><td><code>未标注</code></td><td>41</td><td>23</td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill blue" style="width:55.93%"></div></div><span>66 (1.61/turn)</span></div></td><td><div class="stacked"><span class="seg sc" style="width:45.45%"></span><span class="seg search" style="width:48.48%"></span><span class="seg volunteer" style="width:6.06%"></span></div><div class="mini-legend">SC 30 / Search 32 / Volunteer 4</div></td><td>419</td></tr></tbody></table></div>
+      <h3>意图组合分布</h3>
+      <div class="table-wrap"><table><thead><tr><th>意图组合</th><th>turn 数</th></tr></thead><tbody><tr><td><code>未标注</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:100.00%"></div></div><span>41</span></div></td></tr><tr><td><code>A-4</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:95.12%"></div></div><span>39</span></div></td></tr><tr><td><code>A-9</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:46.34%"></div></div><span>19</span></div></td></tr><tr><td><code>A-4 + A-6</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:21.95%"></div></div><span>9</span></div></td></tr><tr><td><code>A-4 + A-8</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:19.51%"></div></div><span>8</span></div></td></tr><tr><td><code>A-4 + A-9</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:12.20%"></div></div><span>5</span></div></td></tr><tr><td><code>A-8</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:7.32%"></div></div><span>3</span></div></td></tr><tr><td><code>A-1</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:7.32%"></div></div><span>3</span></div></td></tr><tr><td><code>A-1 + A-9</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:4.88%"></div></div><span>2</span></div></td></tr><tr><td><code>A-10</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:2.44%"></div></div><span>1</span></div></td></tr><tr><td><code>A-2 + A-4</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:2.44%"></div></div><span>1</span></div></td></tr><tr><td><code>A-4 + A-5</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:2.44%"></div></div><span>1</span></div></td></tr><tr><td><code>A-5</code></td><td><div class="bar-cell"><div class="bar-track"><div class="bar-fill amber" style="width:2.44%"></div></div><span>1</span></div></td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>关联产物</h2>
+      <div class="table-wrap"><table><thead><tr><th>产物</th><th>链接</th></tr></thead><tbody><tr><td>全量 case 采样报告</td><td><a href="e1_045_platform_nonquant_all_cases_sample_report.html">e1_045_platform_nonquant_all_cases_sample_report.html</a></td></tr><tr><td>Markdown 分析报告</td><td><a href="e1_045_tools_distribution_analysis.md">e1_045_tools_distribution_analysis.md</a></td></tr><tr><td>机器可读统计 JSON</td><td><a href="e1_045_tools_distribution_stats.json">e1_045_tools_distribution_stats.json</a></td></tr><tr><td>Session 明细 CSV</td><td><a href="e1_045_session_tool_stats.csv">e1_045_session_tool_stats.csv</a></td></tr><tr><td>Turn 明细 CSV</td><td><a href="e1_045_turn_tool_stats.csv">e1_045_turn_tool_stats.csv</a></td></tr><tr><td>Tool call 长表 CSV</td><td><a href="e1_045_tool_calls_long.csv">e1_045_tool_calls_long.csv</a></td></tr><tr><td>A 类意图统计 CSV</td><td><a href="e1_045_a_intent_tool_stats.csv">e1_045_a_intent_tool_stats.csv</a></td></tr></tbody></table></div>
+    </section>
+  </main>
+</body>
+</html>
