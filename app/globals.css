@@ -226,3 +226,52 @@ body {
 :not(pre) > code::after {
   content: none;
 }
+
+/* Print styles for the CV page (/cv, /en/cv).
+ * Strip site chrome, force light background, drop the dark accents to ink. */
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 10.5pt;
+  }
+  body {
+    background-image: none !important;
+  }
+  header[class*="sticky"],
+  footer,
+  .cv-no-print {
+    display: none !important;
+  }
+  .cv-page {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .cv-page h1,
+  .cv-page h2,
+  .cv-page h3,
+  .cv-page strong {
+    color: #111111 !important;
+  }
+  .cv-page h2 {
+    color: #444444 !important;
+  }
+  .cv-page a {
+    color: #1a4d8c !important;
+    text-decoration: none !important;
+  }
+  .cv-page [class*="text-[var(--color-fg-muted)]"],
+  .cv-page [class*="text-[var(--color-fg-subtle)]"] {
+    color: #555555 !important;
+  }
+  .cv-page [class*="border-"] {
+    border-color: #cccccc !important;
+  }
+  .cv-page [class*="bg-["] {
+    background: transparent !important;
+  }
+  @page {
+    margin: 14mm 12mm;
+  }
+}

@@ -7,13 +7,13 @@ import { formatDate } from '@/lib/utils'
 
 const CATEGORY_LABEL: Record<Post['category'], string> = {
   tech: '技术',
-  experience: '经验',
+  retro: '复盘',
   life: '日常',
 }
 
 const CATEGORY_COLOR: Record<Post['category'], string> = {
   tech: 'var(--color-accent)',
-  experience: 'var(--color-accent-2)',
+  retro: 'var(--color-accent-2)',
   life: 'var(--color-accent-3)',
 }
 

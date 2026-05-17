@@ -5,10 +5,10 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
 const TAGLINES = [
-  'AI / 算法工程师',
-  '把模型搬上业务线',
-  '记录每一次踩坑',
-  '工程审美 > 工程产出',
+  'LLM post-training · SFT × RLHF',
+  '千问团队 · 阿里巴巴',
+  'ex-ByteDance · 多模态 LLM 预训练',
+  'BUAA · 北京航空航天大学 · 2019',
 ]
 
 export function Hero() {
@@ -98,7 +98,7 @@ export function Hero() {
           const dy = a.y - b.y
           const d = Math.hypot(dx, dy)
           if (d < maxDist) {
-            const alpha = (1 - d / maxDist) * 0.35
+            const alpha = (1 - d / maxDist) * 0.18
             ctx.strokeStyle = `rgba(0, 217, 255, ${alpha})`
             ctx.lineWidth = 1
             ctx.beginPath()
@@ -110,7 +110,7 @@ export function Hero() {
       }
       // Dots
       for (const p of particles) {
-        ctx.fillStyle = 'rgba(179, 136, 255, 0.8)'
+        ctx.fillStyle = 'rgba(179, 136, 255, 0.45)'
         ctx.beginPath()
         ctx.arc(p.x, p.y, 1.4, 0, Math.PI * 2)
         ctx.fill()
@@ -136,10 +136,12 @@ export function Hero() {
     <section className="relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/40 px-6 py-16 md:px-12 md:py-24">
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 h-full w-full"
+        className="absolute inset-0 h-full w-full opacity-40"
         aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--color-bg)] pointer-events-none" />
+      {/* Vignette: keep particles on the edges, push the center dark so the text reads cleanly. */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--color-bg)_0%,_rgba(10,10,15,0.6)_45%,_transparent_85%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--color-bg)]" />
 
       <div className="relative">
         <motion.div
@@ -160,7 +162,7 @@ export function Hero() {
         >
           <span className="block">嗨，我是</span>
           <span className="bg-gradient-to-r from-[var(--color-accent)] via-[var(--color-accent-2)] to-[var(--color-accent-3)] bg-clip-text text-transparent">
-            houpan
+            侯盼 · Hou Pan
           </span>
         </motion.h1>
 
@@ -187,8 +189,9 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.55 }}
           className="mt-6 max-w-xl text-sm leading-relaxed text-[var(--color-fg-muted)] md:text-base"
         >
-          这里是我的技术博客。记录大模型训练、推理、评测管线里的踩坑，
-          顺便写写工程经验和日常思考。每一篇文章都来自真实场景。
+          阿里巴巴 · 千问团队 · LLM 后训练（SFT、RLHF，文本与多模态）。
+          此前在字节跳动做多模态 LLM 预训练。
+          这里写的是工业级后训练管线里的真实踩坑、设计权衡与判断。
         </motion.p>
 
         <motion.div
@@ -203,6 +206,12 @@ export function Hero() {
           >
             阅读博客
             <span className="transition-transform group-hover:translate-x-0.5">→</span>
+          </Link>
+          <Link
+            href="/cv"
+            className="inline-flex items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/60 px-4 py-2 text-sm font-medium text-[var(--color-fg)] backdrop-blur transition-colors hover:border-[var(--color-accent)]"
+          >
+            CV / 简历
           </Link>
           <Link
             href="/about"

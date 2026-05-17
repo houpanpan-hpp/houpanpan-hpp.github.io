@@ -3,7 +3,7 @@ import path from 'node:path'
 import matter from 'gray-matter'
 import { readingTime } from './utils'
 
-export type Category = 'tech' | 'experience' | 'life'
+export type Category = 'tech' | 'retro' | 'life'
 
 export interface PostFrontmatter {
   title: string

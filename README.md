@@ -1,6 +1,32 @@
 # houpan.dev
 
-我的个人博客和经验记录站。Next.js 16 + MDX + Tailwind v4，静态导出，部署在 GitHub Pages。
+侯盼 · Hou Pan 的个人站点 —— 工程笔记、项目档案、技术判断。
+Next.js 16 + MDX + Tailwind v4，静态导出，部署在 GitHub Pages。
+
+## 站点结构（2026-05 重设计后）
+
+| 路由 | 用途 | 来源 |
+|---|---|---|
+| `/` | 首页：Hero + Now 条 + 精选项目 + 最新文章 + 最新报告 | `app/page.tsx` |
+| `/blog`, `/blog/[slug]` | 博客文章 | `content/posts/*.mdx` |
+| `/projects`, `/projects/[slug]` | 项目档案 / case study | `content/projects/*.mdx` |
+| `/reports`, `/reports/[slug]` | 评测报告、可视化分析 | `content/reports/*.mdx` + `public/reports/<slug>/index.html` |
+| `/about` | 关于我（中） | `app/about/page.tsx`（数据写在文件顶部常量里） |
+| `/cv` | 一页式简历，⌘P 友好 | `app/cv/page.tsx` |
+| `/now` | 我现在在折腾什么（每月手动更新） | `app/now/page.tsx` |
+| `/en/about`, `/en/cv` | 英文镜像 | `app/en/about/page.tsx` + `app/en/cv/page.tsx` |
+| `/tags/[tag]` | 标签归档 | 自动生成 |
+
+## 内容计划（6 个月跑步上线）
+
+详见 `~/.claude/plans/19-hazy-dragonfly.md`。
+
+- 每月 1 篇 deep post（2.5k–4k 字，旗舰内容）
+- 每月 2 篇 short notes（paper 笔记 / 复盘）
+- 每月 1 个 project case study
+- 每季度 1 份 interactive report
+
+固定标签集：`rlhf` / `sft` / `multimodal` / `vllm` / `eval` / `data-pipeline` / `search-llm` / `system-design` / `paper-notes` / `career`。
 
 ## 本地开发
 
@@ -23,7 +49,7 @@ pnpm typecheck      # TS 类型检查
 title: "你的文章标题"
 date: 2026-05-17
 tags: [llm, infra]
-category: tech         # tech | experience | life
+category: tech         # tech | retro | life
 summary: 一句话摘要，列表页和搜索都用它。
 draft: false           # 设为 true 可隐藏不发布
 ---

@@ -11,7 +11,9 @@ const NAV_ITEMS = [
   { href: '/blog', label: '博客' },
   { href: '/projects', label: '项目' },
   { href: '/reports', label: '报告' },
+  { href: '/now', label: 'Now' },
   { href: '/about', label: '关于' },
+  { href: '/cv', label: 'CV' },
 ] as const
 
 export function SiteHeader() {
@@ -20,6 +22,13 @@ export function SiteHeader() {
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
+
+  const isEn = pathname.startsWith('/en')
+  const langToggleHref = isEn
+    ? pathname.replace(/^\/en/, '') || '/'
+    : pathname === '/about' || pathname === '/cv'
+      ? `/en${pathname}`
+      : '/en/about'
 
   return (
     <>
@@ -41,7 +50,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'relative rounded-md px-3 py-1.5 text-sm transition-colors',
+                  'relative rounded-md px-2.5 py-1.5 text-sm transition-colors md:px-3',
                   isActive(item.href)
                     ? 'text-[var(--color-fg)]'
                     : 'text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]',
@@ -53,6 +62,13 @@ export function SiteHeader() {
                 )}
               </Link>
             ))}
+            <Link
+              href={langToggleHref}
+              className="ml-2 hidden rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-2 py-1 font-mono text-[10px] text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] sm:inline-block"
+              aria-label={isEn ? 'Switch to Chinese' : 'Switch to English'}
+            >
+              {isEn ? '中' : 'EN'}
+            </Link>
             <button
               onClick={() => setSearchOpen(true)}
               className="ml-2 hidden items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-2.5 py-1.5 text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] sm:flex"
