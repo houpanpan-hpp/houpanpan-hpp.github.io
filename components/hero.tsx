@@ -140,7 +140,7 @@ export function Hero() {
         aria-hidden="true"
       />
       {/* Vignette: keep particles on the edges, push the center dark so the text reads cleanly. */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--color-bg)_0%,_rgba(10,10,15,0.6)_45%,_transparent_85%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--color-bg)_0%,_var(--color-vignette)_45%,_transparent_85%)]" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--color-bg)]" />
 
       <div className="relative">

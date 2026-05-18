@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { SearchDialog } from './search-dialog'
+import { ThemeToggle } from './theme-toggle'
 
 const NAV_ITEMS = [
   { href: '/', label: '首页' },
@@ -69,6 +70,7 @@ export function SiteHeader() {
             >
               {isEn ? '中' : 'EN'}
             </Link>
+            <ThemeToggle />
             <button
               onClick={() => setSearchOpen(true)}
               className="ml-2 hidden items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-2.5 py-1.5 text-xs text-[var(--color-fg-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] sm:flex"

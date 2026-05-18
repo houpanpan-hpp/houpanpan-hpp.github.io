@@ -8,7 +8,7 @@ export function useMDXComponents(components: MDXComponents = {}): MDXComponents 
       const isInternal = href?.startsWith('/') || href?.startsWith('#')
       if (isInternal && href) {
         return (
-          <Link href={href} className="text-cyan-400 underline-offset-4 hover:underline">
+          <Link href={href} className="text-[var(--color-accent)] underline-offset-4 hover:underline">
             {children}
           </Link>
         )
@@ -18,7 +18,7 @@ export function useMDXComponents(components: MDXComponents = {}): MDXComponents 
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-cyan-400 underline-offset-4 hover:underline"
+          className="text-[var(--color-accent)] underline-offset-4 hover:underline"
           {...props}
         >
           {children}
