@@ -1,5 +1,3 @@
-# houpan.dev
-
 昱泽 · Yu Ze 的个人站点 —— 工程笔记、项目档案、技术判断。
 Next.js 16 + MDX + Tailwind v4，静态导出，部署在 GitHub Pages。
 
@@ -143,7 +141,3 @@ assetPrefix: '/<repo-name>',
 - **搜索**：Fuse.js + 构建期生成 JSON 索引
 - **评论**：@giscus/react
 - **部署**：GitHub Actions + GitHub Pages
-
-## License
-
-文章内容 © houpan，代码部分 MIT。
