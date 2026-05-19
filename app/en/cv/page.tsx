@@ -5,7 +5,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'CV',
   description:
-    'Hou Pan — LLM post-training engineer · Alibaba Quark Search · ex-ByteDance multimodal pretraining · BUAA 2019.',
+    'Yu Ze — LLM post-training engineer · Alibaba Quark Search · ex-ByteDance multimodal pretraining · BUAA 2019.',
 }
 
 const SUMMARY =
@@ -42,7 +42,7 @@ const EXPERIENCE = [
 const PROJECTS = [
   {
     slug: 'example-project',
-    title: 'houpan.dev',
+    title: 'yuze.dev',
     desc: 'This site. Next.js 16 + MDX + Tailwind v4, statically exported to GitHub Pages.',
   },
   // TODO: replace with 4-6 real projects, each linking to /projects/<slug>.
@@ -86,13 +86,13 @@ export default function CVEnPage() {
       </div>
 
       <header className="mb-8 border-b border-[var(--color-border)] pb-6">
-        <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Hou Pan</h1>
+        <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Yu Ze</h1>
         <p className="mt-1 text-sm text-[var(--color-fg-muted)]">
           LLM Post-Training Engineer · Alibaba Quark Search
         </p>
         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-[var(--color-fg-muted)]">
           <span>📧 TODO@example.com</span>
-          <span>🌐 houpan.dev</span>
+          <span>🌐 yuze.dev</span>
           <span>💻 github.com/houpanpan</span>
           <span>🔗 linkedin.com/in/TODO</span>
         </div>

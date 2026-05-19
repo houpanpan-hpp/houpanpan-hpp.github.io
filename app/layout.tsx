@@ -9,12 +9,12 @@ const SITE_DESCRIPTION =
 
 export const metadata: Metadata = {
   title: {
-    default: 'houpan.dev — LLM 后训练 · 工程笔记 · 项目档案',
-    template: '%s · houpan.dev',
+    default: 'yuze.dev — LLM 后训练 · 工程笔记 · 项目档案',
+    template: '%s · yuze.dev',
   },
   description: SITE_DESCRIPTION,
-  metadataBase: new URL('https://houpan.dev'),
-  authors: [{ name: 'Hou Pan' }],
+  metadataBase: new URL('https://houpanpan-hpp.github.io'),
+  authors: [{ name: 'Yu Ze' }],
   keywords: [
     'LLM',
     'post-training',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'zh_CN',
     alternateLocale: 'en_US',
-    siteName: 'houpan.dev',
+    siteName: 'yuze.dev',
   },
   twitter: {
     card: 'summary_large_image',

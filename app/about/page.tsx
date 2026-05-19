@@ -75,7 +75,7 @@ export default function AboutPage() {
         <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
           {/* Drop a square avatar at /public/avatar.jpg to replace this placeholder. */}
           <div className="grid h-full w-full place-items-center bg-gradient-to-br from-[var(--color-accent)]/20 via-[var(--color-accent-2)]/20 to-[var(--color-accent-3)]/20 font-mono text-2xl text-[var(--color-fg-muted)]">
-            HP
+            YZ
           </div>
         </div>
         <div>

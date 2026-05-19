@@ -49,7 +49,7 @@ const EXPERIENCE = [
 const PROJECTS = [
   {
     slug: 'example-project',
-    title: 'houpan.dev',
+    title: 'yuze.dev',
     desc: '本站。Next.js 16 + MDX + Tailwind v4，静态导出到 GitHub Pages。',
   },
   // TODO: 用 4-6 个真实项目替换。每个 50 字以内，保持 link 到 /projects/<slug>。
@@ -104,7 +104,7 @@ export default function CVPage() {
         </p>
         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-[var(--color-fg-muted)]">
           <span>📧 TODO@example.com</span>
-          <span>🌐 houpan.dev</span>
+          <span>🌐 yuze.dev</span>
           <span>💻 github.com/houpanpan</span>
           <span>🔗 linkedin.com/in/TODO</span>
         </div>

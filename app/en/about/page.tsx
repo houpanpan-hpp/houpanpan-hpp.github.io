@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Hou Pan — LLM post-training engineer at Alibaba Quark Search. SFT × RLHF for text and multimodal models. Previously multimodal LLM pretraining at ByteDance. BUAA 2019.',
+    'Yu Ze — LLM post-training engineer at Alibaba Quark Search. SFT × RLHF for text and multimodal models. Previously multimodal LLM pretraining at ByteDance. BUAA 2019.',
 }
 
 const EXPERIENCE = [
@@ -71,11 +71,11 @@ export default function AboutEnPage() {
       <header className="mb-12 flex flex-col items-start gap-6 md:flex-row md:items-center">
         <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
           <div className="grid h-full w-full place-items-center bg-gradient-to-br from-[var(--color-accent)]/20 via-[var(--color-accent-2)]/20 to-[var(--color-accent-3)]/20 font-mono text-2xl text-[var(--color-fg-muted)]">
-            HP
+            YZ
           </div>
         </div>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Hou Pan</h1>
+          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Yu Ze</h1>
           <p className="mt-2 text-[var(--color-fg-muted)]">
             LLM Post-Training Engineer · Alibaba Quark Search
           </p>

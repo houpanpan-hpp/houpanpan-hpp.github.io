@@ -42,7 +42,7 @@ export function SiteHeader() {
             <span className="grid h-7 w-7 place-items-center rounded-md bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-accent-2)] text-[var(--color-bg)] transition-transform group-hover:scale-110">
               ~
             </span>
-            <span className="hidden sm:inline">houpan.dev</span>
+            <span className="hidden sm:inline">yuze.dev</span>
           </Link>
 
           <nav className="flex items-center gap-1">
