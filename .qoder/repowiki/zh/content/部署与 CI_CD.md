@@ -19,6 +19,13 @@
 - [app/projects/page.tsx](file://app/projects/page.tsx)
 </cite>
 
+## 更新摘要
+**变更内容**
+- 简化了 GitHub Actions 部署配置，移除了 `enablement: true` 参数
+- 采用更直接的手动 Pages 管理方式
+- 更新了工作流权限配置，移除了不必要的权限声明
+- 优化了部署流程的权限控制
+
 ## 目录
 1. [简介](#简介)
 2. [项目结构](#项目结构)
@@ -60,12 +67,12 @@ F --> G["GitHub Pages 部署"]
 ```
 
 **图表来源**
-- [.github/workflows/deploy.yml:1-64](file://.github/workflows/deploy.yml#L1-L64)
+- [.github/workflows/deploy.yml:1-62](file://.github/workflows/deploy.yml#L1-L62)
 - [next.config.mjs:1-19](file://next.config.mjs#L1-L19)
 - [package.json:1-48](file://package.json#L1-L48)
 
 **章节来源**
-- [.github/workflows/deploy.yml:1-64](file://.github/workflows/deploy.yml#L1-L64)
+- [.github/workflows/deploy.yml:1-62](file://.github/workflows/deploy.yml#L1-L62)
 - [next.config.mjs:1-19](file://next.config.mjs#L1-L19)
 - [package.json:1-48](file://package.json#L1-L48)
 - [README.md:88-101](file://README.md#L88-L101)
@@ -88,7 +95,7 @@ F --> G["GitHub Pages 部署"]
   - app/page.tsx、app/blog/page.tsx、app/projects/page.tsx 展示首页、博客与项目列表等静态内容。
 
 **章节来源**
-- [.github/workflows/deploy.yml:1-64](file://.github/workflows/deploy.yml#L1-L64)
+- [.github/workflows/deploy.yml:1-62](file://.github/workflows/deploy.yml#L1-L62)
 - [next.config.mjs:1-19](file://next.config.mjs#L1-L19)
 - [scripts/build-search-index.ts:1-95](file://scripts/build-search-index.ts#L1-L95)
 - [app/layout.tsx:1-57](file://app/layout.tsx#L1-L57)
@@ -119,7 +126,7 @@ Pages-->>Dev : 可访问站点
 ```
 
 **图表来源**
-- [.github/workflows/deploy.yml:1-64](file://.github/workflows/deploy.yml#L1-L64)
+- [.github/workflows/deploy.yml:1-62](file://.github/workflows/deploy.yml#L1-L62)
 - [next.config.mjs:1-19](file://next.config.mjs#L1-L19)
 - [package.json:1-48](file://package.json#L1-L48)
 
@@ -142,6 +149,8 @@ Pages-->>Dev : 可访问站点
   - 依赖 build 成功后执行。
   - 使用 actions/deploy-pages@v4 部署，environment.url 指向部署输出的页面地址。
 
+**更新** 移除了 enablement: true 参数，采用更直接的手动 Pages 管理方式
+
 ```mermaid
 flowchart TD
 Start(["开始"]) --> Push["推送至 main 或手动触发"]
@@ -156,10 +165,10 @@ Deploy --> End(["完成"])
 ```
 
 **图表来源**
-- [.github/workflows/deploy.yml:1-64](file://.github/workflows/deploy.yml#L1-L64)
+- [.github/workflows/deploy.yml:1-62](file://.github/workflows/deploy.yml#L1-L62)
 
 **章节来源**
-- [.github/workflows/deploy.yml:1-64](file://.github/workflows/deploy.yml#L1-L64)
+- [.github/workflows/deploy.yml:1-62](file://.github/workflows/deploy.yml#L1-L62)
 
 ### 静态导出配置与优化
 - 输出模式
@@ -183,11 +192,11 @@ Out --> Pages["上传并部署到 GitHub Pages"]
 
 **图表来源**
 - [next.config.mjs:1-19](file://next.config.mjs#L1-L19)
-- [.github/workflows/deploy.yml:35-53](file://.github/workflows/deploy.yml#L35-L53)
+- [.github/workflows/deploy.yml:35-51](file://.github/workflows/deploy.yml#L35-L51)
 
 **章节来源**
 - [next.config.mjs:1-19](file://next.config.mjs#L1-L19)
-- [.github/workflows/deploy.yml:35-53](file://.github/workflows/deploy.yml#L35-L53)
+- [.github/workflows/deploy.yml:35-51](file://.github/workflows/deploy.yml#L35-L51)
 
 ### 构建期搜索索引生成
 - 触发时机
@@ -273,7 +282,7 @@ Header["components/site-header.tsx"] --> Utils["lib/utils.ts"]
 ```
 
 **图表来源**
-- [.github/workflows/deploy.yml:1-64](file://.github/workflows/deploy.yml#L1-L64)
+- [.github/workflows/deploy.yml:1-62](file://.github/workflows/deploy.yml#L1-L62)
 - [next.config.mjs:1-19](file://next.config.mjs#L1-L19)
 - [package.json:6-12](file://package.json#L6-L12)
 - [scripts/build-search-index.ts:1-95](file://scripts/build-search-index.ts#L1-L95)
@@ -287,7 +296,7 @@ Header["components/site-header.tsx"] --> Utils["lib/utils.ts"]
 - [lib/utils.ts:1-24](file://lib/utils.ts#L1-L24)
 
 **章节来源**
-- [.github/workflows/deploy.yml:1-64](file://.github/workflows/deploy.yml#L1-L64)
+- [.github/workflows/deploy.yml:1-62](file://.github/workflows/deploy.yml#L1-L62)
 - [next.config.mjs:1-19](file://next.config.mjs#L1-L19)
 - [package.json:6-12](file://package.json#L6-L12)
 - [scripts/build-search-index.ts:1-95](file://scripts/build-search-index.ts#L1-L95)
@@ -322,7 +331,7 @@ Header["components/site-header.tsx"] --> Utils["lib/utils.ts"]
 ## 故障排除指南
 - 工作流失败
   - 检查 Actions 日志中的依赖安装与构建步骤，确认 pnpm 版本与 Node 版本是否符合工作流配置。
-  - 若出现“找不到 out/”或 Pages 未更新，确认已执行创建 .nojekyll 的步骤并成功上传资产。
+  - 若出现"找不到 out/"或 Pages 未更新，确认已执行创建 .nojekyll 的步骤并成功上传资产。
 - 404 或路由异常
   - 确认 trailingSlash=true 与 Pages 的静态文件映射一致。
   - 若使用子路径部署，检查是否正确添加 basePath 与 assetPrefix。
@@ -334,12 +343,12 @@ Header["components/site-header.tsx"] --> Utils["lib/utils.ts"]
   - 确认 predev/prebuild 钩子已运行，且 content 下存在有效 MDX 文件。
 
 **章节来源**
-- [.github/workflows/deploy.yml:35-53](file://.github/workflows/deploy.yml#L35-L53)
+- [.github/workflows/deploy.yml:35-51](file://.github/workflows/deploy.yml#L35-L51)
 - [README.md:103-120](file://README.md#L103-L120)
 - [scripts/build-search-index.ts:17-27](file://scripts/build-search-index.ts#L17-L27)
 
 ## 结论
-本项目通过“静态导出 + GitHub Actions + GitHub Pages”的组合，实现了稳定、可重复的部署流水线。工作流明确、配置简洁，配合构建期搜索索引与 tailwind 工具函数，兼顾了开发效率与运行性能。遵循本文的部署与优化建议，可进一步提升安全性与可靠性。
+本项目通过"静态导出 + GitHub Actions + GitHub Pages"的组合，实现了稳定、可重复的部署流水线。工作流明确、配置简洁，配合构建期搜索索引与 tailwind 工具函数，兼顾了开发效率与运行性能。遵循本文的部署与优化建议，可进一步提升安全性与可靠性。
 
 ## 附录
 
@@ -373,3 +382,17 @@ Header["components/site-header.tsx"] --> Utils["lib/utils.ts"]
 - [.github/workflows/deploy.yml:8-11](file://.github/workflows/deploy.yml#L8-L11)
 - [README.md:103-120](file://README.md#L103-L120)
 - [.github/workflows/deploy.yml:32-33](file://.github/workflows/deploy.yml#L32-L33)
+
+### 部署配置变更说明
+**更新** 本项目已简化 GitHub Actions 部署配置，主要变更包括：
+
+- **移除 enablement: true 参数**：简化了 Pages 启用流程，采用更直接的手动管理方式
+- **优化权限配置**：移除了不必要的权限声明，仅保留最小必要权限
+- **改进部署流程**：actions/configure-pages@v5 与 actions/deploy-pages@v4 的升级
+- **增强安全性**：通过最小权限原则减少潜在的安全风险
+
+这些变更使得部署流程更加简洁高效，同时保持了相同的功能完整性。
+
+**章节来源**
+- [.github/workflows/deploy.yml:47-62](file://.github/workflows/deploy.yml#L47-L62)
+- [README.md:92-94](file://README.md#L92-L94)

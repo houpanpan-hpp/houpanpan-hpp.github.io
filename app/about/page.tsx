@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: '关于',
   description:
-    '侯盼 · Hou Pan — 阿里巴巴夸克搜索 LLM 后训练工程师。SFT × RLHF，文本 & 多模态。前字节跳动多模态 LLM 预训练。北航 2019。',
+    '昱泽 · Yu Ze — 阿里巴巴夸克搜索 LLM 后训练工程师。SFT × RLHF，文本 & 多模态。前字节跳动多模态 LLM 预训练。北航 2019。',
 }
 
 const EXPERIENCE = [
@@ -79,7 +79,7 @@ export default function AboutPage() {
           </div>
         </div>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">侯盼 · Hou Pan</h1>
+          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">昱泽 · Yu Ze</h1>
           <p className="mt-2 text-[var(--color-fg-muted)]">
             LLM 后训练工程师 · 阿里巴巴夸克搜索
           </p>

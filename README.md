@@ -1,6 +1,6 @@
 # houpan.dev
 
-侯盼 · Hou Pan 的个人站点 —— 工程笔记、项目档案、技术判断。
+昱泽 · Yu Ze 的个人站点 —— 工程笔记、项目档案、技术判断。
 Next.js 16 + MDX + Tailwind v4，静态导出，部署在 GitHub Pages。
 
 ## 站点结构（2026-05 重设计后）

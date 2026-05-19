@@ -162,7 +162,7 @@ export function Hero() {
         >
           <span className="block">嗨，我是</span>
           <span className="bg-gradient-to-r from-[var(--color-accent)] via-[var(--color-accent-2)] to-[var(--color-accent-3)] bg-clip-text text-transparent">
-            侯盼 · Hou Pan
+            昱泽 · Yu Ze
           </span>
         </motion.h1>
 

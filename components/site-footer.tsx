@@ -7,7 +7,7 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-[var(--color-fg-muted)] md:flex-row md:px-6">
         <div className="flex items-center gap-2 font-mono">
           <span className="text-[var(--color-accent)]">$</span>
-          <span>echo &quot;© {year} 侯盼 · Hou Pan&quot;</span>
+          <span>echo &quot;© {year} 昱泽 · Yu Ze&quot;</span>
         </div>
         <nav className="flex items-center gap-5">
           <Link

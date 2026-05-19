@@ -5,7 +5,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'CV',
   description:
-    '侯盼 · Hou Pan — LLM 后训练工程师 · 阿里巴巴夸克搜索 · 前字节跳动多模态预训练 · 北航 2019。',
+    '昱泽 · Yu Ze — LLM 后训练工程师 · 阿里巴巴夸克搜索 · 前字节跳动多模态预训练 · 北航 2019。',
 }
 
 const SUMMARY =
@@ -98,7 +98,7 @@ export default function CVPage() {
 
       {/* Header */}
       <header className="mb-8 border-b border-[var(--color-border)] pb-6">
-        <h1 className="text-3xl font-bold tracking-tight md:text-4xl">侯盼 · Hou Pan</h1>
+        <h1 className="text-3xl font-bold tracking-tight md:text-4xl">昱泽 · Yu Ze</h1>
         <p className="mt-1 text-sm text-[var(--color-fg-muted)]">
           LLM 后训练工程师 · 阿里巴巴夸克搜索
         </p>

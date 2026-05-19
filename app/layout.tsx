@@ -5,7 +5,7 @@ import { SiteFooter } from '@/components/site-footer'
 import { ThemeProvider } from '@/components/theme-provider'
 
 const SITE_DESCRIPTION =
-  '侯盼 · Hou Pan — 阿里巴巴夸克搜索 LLM 后训练工程师。SFT × RLHF，文本与多模态。前字节跳动多模态 LLM 预训练。北航 2019。'
+  '昱泽 · Yu Ze — 阿里巴巴夸克搜索 LLM 后训练工程师。SFT × RLHF，文本与多模态。前字节跳动多模态 LLM 预训练。北航 2019。'
 
 export const metadata: Metadata = {
   title: {
@@ -25,12 +25,12 @@ export const metadata: Metadata = {
     'Quark',
     'ByteDance',
     'BUAA',
-    'Hou Pan',
-    '侯盼',
+    'Yu Ze',
+    '昱泽',
     'AI engineer',
   ],
   openGraph: {
-    title: 'houpan.dev — Hou Pan',
+    title: '昱泽 · Yu Ze',
     description: SITE_DESCRIPTION,
     type: 'website',
     locale: 'zh_CN',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'houpan.dev — Hou Pan',
+    title: '昱泽 · Yu Ze',
     description: SITE_DESCRIPTION,
   },
 }
