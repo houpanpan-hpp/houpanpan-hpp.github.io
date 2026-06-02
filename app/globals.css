@@ -189,7 +189,7 @@ body {
   line-height: 1.6;
 }
 
-[data-rehype-pretty-code-figure] code {
+[data-rehype-pretty-code-figure] pre code {
   display: grid;
   background: transparent !important;
   padding: 0;
@@ -249,6 +249,9 @@ body {
   font-family: var(--font-mono);
   font-size: 0.875em;
   color: var(--color-accent);
+  /* Let long inline code break within itself instead of being pushed to a new line. */
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 :not(pre) > code::before,
