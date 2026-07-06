@@ -14,6 +14,16 @@ type SearchEntry = {
 
 const ROOT = process.cwd()
 
+function slugFromFrontmatterOrFilename(
+  filename: string,
+  data: Record<string, unknown>,
+): string {
+  const slug = data.slug
+  return typeof slug === 'string' && slug.trim()
+    ? slug.trim()
+    : filename.replace(/\.(mdx|md)$/, '')
+}
+
 function readMdxDir(dir: string): { filename: string; data: Record<string, unknown> }[] {
   if (!fs.existsSync(dir)) return []
   return fs
@@ -37,7 +47,7 @@ function build(): SearchEntry[] {
       summary: String(data.summary ?? ''),
       tags: (data.tags as string[] | undefined) ?? [],
       category: String(data.category ?? 'tech'),
-      slug: filename.replace(/\.(mdx|md)$/, ''),
+      slug: slugFromFrontmatterOrFilename(filename, data),
       date:
         typeof data.date === 'string'
           ? data.date
@@ -55,7 +65,7 @@ function build(): SearchEntry[] {
       summary: String(data.summary ?? ''),
       tags: (data.stack as string[] | undefined) ?? [],
       category: 'project',
-      slug: filename.replace(/\.(mdx|md)$/, ''),
+      slug: slugFromFrontmatterOrFilename(filename, data),
       date:
         typeof data.date === 'string'
           ? data.date
@@ -73,7 +83,7 @@ function build(): SearchEntry[] {
       summary: String(data.summary ?? ''),
       tags: (data.tags as string[] | undefined) ?? [],
       category: 'report',
-      slug: filename.replace(/\.(mdx|md)$/, ''),
+      slug: slugFromFrontmatterOrFilename(filename, data),
       date:
         typeof data.date === 'string'
           ? data.date

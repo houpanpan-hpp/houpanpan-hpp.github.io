@@ -6,6 +6,7 @@ import { readingTime } from './utils'
 export type Category = 'tech' | 'retro' | 'life'
 
 export interface PostFrontmatter {
+  slug?: string
   title: string
   date: string
   tags: string[]
@@ -22,6 +23,18 @@ export interface Post extends PostFrontmatter {
 }
 
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts')
+
+function slugFromFrontmatterOrFilename(filename: string, fm: Partial<PostFrontmatter>): string {
+  return fm.slug?.trim() || filename.replace(/\.(mdx|md)$/, '')
+}
+
+function decodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug)
+  } catch {
+    return slug
+  }
+}
 
 function readPostFiles(): string[] {
   if (!fs.existsSync(POSTS_DIR)) return []
@@ -42,7 +55,7 @@ function parsePost(filename: string): Post | null {
   }
   if (fm.draft) return null
 
-  const slug = filename.replace(/\.(mdx|md)$/, '')
+  const slug = slugFromFrontmatterOrFilename(filename, fm)
 
   return {
     slug,
@@ -66,12 +79,8 @@ export function getAllPosts(): Post[] {
 }
 
 export function getPostBySlug(slug: string): Post | null {
-  const tryNames = [`${slug}.mdx`, `${slug}.md`]
-  for (const name of tryNames) {
-    const filePath = path.join(POSTS_DIR, name)
-    if (fs.existsSync(filePath)) return parsePost(name)
-  }
-  return null
+  const decodedSlug = decodeSlug(slug)
+  return getAllPosts().find((post) => post.slug === decodedSlug) ?? null
 }
 
 export function getAllTags(): { tag: string; count: number }[] {
